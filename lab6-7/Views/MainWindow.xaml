@@ -38,7 +38,7 @@
                     <GroupBox Header="{DynamicResource m_ItemsList}">
                         <ListBox ItemsSource="{Binding Items}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedItem}"/>
                     </GroupBox>
-                    <GroupBox Grid.Column="1" Header="{Binding SelectedItem.Name, FallbackValue={DynamicResource m_selectedItem}, TargetNullValue={DynamicResource m_ItemsList}}">
+                    <GroupBox Grid.Column="1" Header="{Binding SelectedItem.Name}">
                         <StackPanel Visibility="{Binding SelectedItem, Converter={StaticResource SelectedItemVisibility}}">
                             <Grid>
                                 <Grid.ColumnDefinitions>
@@ -46,7 +46,7 @@
                                     <ColumnDefinition Width="6*"/>
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Text="{DynamicResource m_ItemName}"/>
-                                <TextBox Grid.Column="1" Text="{Binding SelectedItem.Name, TargetNullValue={DynamicResource m_ItemNull}, UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBox Grid.Column="1" Text="{Binding SelectedItem.Name, UpdateSourceTrigger=PropertyChanged}"/>
                             </Grid>
                             <Grid>
                                 <Grid.ColumnDefinitions>
@@ -54,7 +54,7 @@
                                     <ColumnDefinition Width="6*"/>
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Text="{DynamicResource m_ItemSmallDesc}"/>
-                                <TextBox Grid.Column="1" Text="{Binding SelectedItem.SmallDescription, TargetNullValue={DynamicResource m_ItemsList}, UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBox Grid.Column="1" Text="{Binding SelectedItem.SmallDescription, UpdateSourceTrigger=PropertyChanged}"/>
                             </Grid>
                             <Grid>
                                 <Grid.ColumnDefinitions>
