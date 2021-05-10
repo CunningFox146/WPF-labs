@@ -78,6 +78,36 @@ namespace lab6_7.ViewModels
             OnPropertyChanged("ItemToCreate");
         }
 
+        public ICommand LoadJsonCommand { get; }
+        private bool OnCanLoadJsonCommand(object p) => true;
+        private void OnLoadJsonCommand(object p)
+        {
+            var dlg = new OpenFileDialog();
+            dlg.Filter = "Json (*.json)|*.json";
+            
+
+            if (dlg.ShowDialog() == true)
+            {
+                var (LoadedItems, _) = ItemSerializer.DeserializeFromFile<Item>(dlg.FileName);
+                Items = new ObservableCollection<Item>(LoadedItems);
+                OnPropertyChanged("Items");
+            }
+        }
+
+        public ICommand SaveJsonCommand { get; }
+        private bool OnCanSaveJsonCommand(object p) => true;
+        private void OnSaveJsonCommand(object p)
+        {
+            var dlg = new SaveFileDialog();
+            dlg.Filter = "Json (*.json)|*.json";
+            dlg.FileName = "Save.json";
+
+            if (dlg.ShowDialog() == true)
+            {
+                string _ = ItemSerializer.Serialize<Item>(Items, dlg.FileName);
+            }
+        }
+
         #endregion
 
         public ObservableCollection<Item> Items { get; set; }
@@ -96,6 +126,8 @@ namespace lab6_7.ViewModels
             SetImageCommand = new LambdaCommand(OnSetImageCommand, OnCanSetImageCommand);
             AddItemCommand = new LambdaCommand(OnAddItemCommand, OnCanAddItemCommand);
             RemoveItemCommand = new LambdaCommand(OnRemoveItemCommand, OnCanRemoveItemCommand);
+            LoadJsonCommand = new LambdaCommand(OnLoadJsonCommand, OnCanLoadJsonCommand);
+            SaveJsonCommand = new LambdaCommand(OnSaveJsonCommand, OnCanSaveJsonCommand);
 
             #endregion
 
