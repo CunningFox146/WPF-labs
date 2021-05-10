@@ -35,7 +35,7 @@ namespace lab6_7.ViewModels
             if (dlg.ShowDialog() == true)
             {
                 SelectedItem.ImagePath = dlg.FileName;
-                OnPropertyChanged();
+                OnPropertyChanged("SelectedItem");
                 //SelectedImageTextBlock.Text = System.IO.Path.GetFileName(dlg.FileName);
                 //ImgPreview.Source = selectedImg;
             }
@@ -47,13 +47,6 @@ namespace lab6_7.ViewModels
         private Item selectedItem;
         public Item SelectedItem { get => selectedItem; set => Set(ref selectedItem, value); }
         Random rnd = new Random();
-
-        //private string status;
-        //public string Status
-        //{
-        //    get => status;
-        //    set => Set(ref status, value);
-        //}
 
         public MainWindowViewModel()
         {
@@ -74,7 +67,7 @@ namespace lab6_7.ViewModels
                 Price = item_idx * 10,
                 Quantity = item_idx * 15,
                 ItemCategory = (ItemCategory)(item_idx++ % 3),
-                ImagePath = rnd.Next(0, 2) == 1 ? "Images/shocked.png" : "Images/image_load_failed.png"
+                ImagePath = null,
             });
 
             Items = new ObservableCollection<Item>(items);

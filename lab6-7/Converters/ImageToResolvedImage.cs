@@ -15,18 +15,18 @@ namespace lab6_7.Converters
         {
             string path = (string)value;
 
-            if(path is null)
+            BitmapImage img = new BitmapImage();
+
+            if (path is null || !File.Exists(path))
             {
-                BitmapImage img2 = new BitmapImage();
-                img2.BeginInit();
-                img2.UriSource = new Uri(@"/lab6-7;component/Images/image_load_failed.png", UriKind.Relative);
-                img2.EndInit();
-                return img2;
+                img.BeginInit();
+                img.UriSource = new Uri(@"/lab6-7;component/Images/image_load_failed.png", UriKind.Relative);
+                img.EndInit();
+                return img;
             }
 
-            BitmapImage img = new BitmapImage();
             img.BeginInit();
-            img.UriSource = new Uri(string.Concat(@"/lab6-7;component/", path), UriKind.Relative);
+            img.UriSource = new Uri(path, UriKind.Absolute);
             img.EndInit();
             return img;
         }
