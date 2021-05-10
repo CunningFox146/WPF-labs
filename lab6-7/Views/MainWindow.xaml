@@ -21,6 +21,7 @@
             <MenuItem Header="{DynamicResource m_Help}">
                 <MenuItem Header="{DynamicResource m_About}"/>
             </MenuItem>
+            <MenuItem Header="{DynamicResource m_ChangeLanguage}" Command="{Binding ChangeLanguageCommand}"/>
         </Menu>
         <!--<StatusBar DockPanel.Dock="Bottom">
             <StatusBarItem>

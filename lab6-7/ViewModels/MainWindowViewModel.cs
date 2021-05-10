@@ -108,7 +108,33 @@ namespace lab6_7.ViewModels
             }
         }
 
+        public ICommand ChangeLanguageCommand { get; }
+        private bool OnCanChangeLanguageCommand(object p) => true;
+        private void OnChangeLanguageCommand(object p)
+        {
+            Uri uri;
+            ResourceDictionary dict;
+            if (CurrentLanguage == "English")
+            {
+                uri = new Uri("Resources/Russian.xaml", UriKind.Relative);
+                CurrentLanguage = "Russian";
+            }
+            else
+            {
+                uri = new Uri("Resources/English.xaml", UriKind.Relative);
+                CurrentLanguage = "English";
+            }
+
+            dict = Application.LoadComponent(uri) as ResourceDictionary;
+
+            Application.Current.Resources.Clear();
+
+            Application.Current.Resources.MergedDictionaries.Add(dict);
+        }
+
         #endregion
+
+        public string CurrentLanguage { get; set; } = "Russian";
 
         public ObservableCollection<Item> Items { get; set; }
         private Item selectedItem;
@@ -128,6 +154,7 @@ namespace lab6_7.ViewModels
             RemoveItemCommand = new LambdaCommand(OnRemoveItemCommand, OnCanRemoveItemCommand);
             LoadJsonCommand = new LambdaCommand(OnLoadJsonCommand, OnCanLoadJsonCommand);
             SaveJsonCommand = new LambdaCommand(OnSaveJsonCommand, OnCanSaveJsonCommand);
+            ChangeLanguageCommand = new LambdaCommand(OnChangeLanguageCommand, OnCanChangeLanguageCommand);
 
             #endregion
 
