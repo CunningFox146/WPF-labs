@@ -8,7 +8,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\image_load_failed.png" />
+    <None Remove="Images\shocked.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Views\Windows\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\image_load_failed.png" />
+    <Resource Include="Images\shocked.png" />
   </ItemGroup>
 
 </Project>

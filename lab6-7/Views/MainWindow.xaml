@@ -93,7 +93,7 @@
                                 </Grid.ColumnDefinitions>
                                 <TextBlock>Изображение</TextBlock>
                                 <!--<TextBox Grid.Column="1" Width="Auto" TextWrapping="Wrap" Text="{Binding SelectedItem.Description, TargetNullValue='Товар не выбран', UpdateSourceTrigger=PropertyChanged}"/>-->
-                                <Image Grid.Column="1" Source="{Binding SelectedItem.ImagePath}"/>
+                                <Image Grid.Column="1" Source="{Binding SelectedItem.ImagePath, Converter={StaticResource ImageToResolvedImage}}" Width="100" Height="100"/>
                             </Grid>
                             <Grid>
                                 <Grid.ColumnDefinitions>
