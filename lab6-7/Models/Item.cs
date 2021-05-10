@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows.Media.Imaging;
 
 namespace lab6_7.Models
 {
@@ -21,6 +22,7 @@ namespace lab6_7.Models
         public float Price { get; set; }
         public int Quantity { get; set; }
         public ItemCategory ItemCategory { get; set; }
+        public BitmapImage Image { get; set; }
         public string ImagePath { get; set; }
     }
 }

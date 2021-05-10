@@ -46,6 +46,7 @@ namespace lab6_7.ViewModels
         public ObservableCollection<Item> Items { get; set; }
         private Item selectedItem;
         public Item SelectedItem { get => selectedItem; set => Set(ref selectedItem, value); }
+        Random rnd = new Random();
 
         //private string status;
         //public string Status
@@ -73,7 +74,7 @@ namespace lab6_7.ViewModels
                 Price = item_idx * 10,
                 Quantity = item_idx * 15,
                 ItemCategory = (ItemCategory)(item_idx++ % 3),
-                ImagePath = ""
+                ImagePath = rnd.Next(0, 2) == 1 ? "Images/shocked.png" : "Images/image_load_failed.png"
             });
 
             Items = new ObservableCollection<Item>(items);
