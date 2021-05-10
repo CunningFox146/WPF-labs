@@ -13,13 +13,13 @@
 
     <DockPanel>
         <Menu DockPanel.Dock="Top">
-            <MenuItem Header="Файл">
-                <MenuItem Header="Сохранить" Command="{Binding SaveJsonCommand}"/>
-                <MenuItem Header="Загрузить" Command="{Binding LoadJsonCommand}"/>
-                <MenuItem Header="Выход" Command="{Binding CloseAplicationCommand}"/>
+            <MenuItem Header="{DynamicResource m_File}">
+                <MenuItem Header="{DynamicResource m_Save}" Command="{Binding SaveJsonCommand}"/>
+                <MenuItem Header="{DynamicResource m_Load}" Command="{Binding LoadJsonCommand}"/>
+                <MenuItem Header="{DynamicResource m_Exit}" Command="{Binding CloseAplicationCommand}"/>
             </MenuItem>
-            <MenuItem Header="Помощь">
-                <MenuItem Header="О программе"/>
+            <MenuItem Header="{DynamicResource m_Help}">
+                <MenuItem Header="{DynamicResource m_About}"/>
             </MenuItem>
         </Menu>
         <!--<StatusBar DockPanel.Dock="Bottom">
@@ -28,33 +28,33 @@
             </StatusBarItem>
         </StatusBar>-->
         <TabControl>
-            <TabItem Header="Просмотр товаров">
+            <TabItem Header="{DynamicResource m_ItemsList}">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="2*"/>
                         <ColumnDefinition Width="6*"/>
                     </Grid.ColumnDefinitions>
 
-                    <GroupBox Header="Список товаров">
+                    <GroupBox Header="{DynamicResource m_ItemsList}">
                         <ListBox ItemsSource="{Binding Items}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedItem}"/>
                     </GroupBox>
-                    <GroupBox Grid.Column="1" Header="{Binding SelectedItem.Name, FallbackValue='Выбранный товар', TargetNullValue='Товар не выбран'}">
+                    <GroupBox Grid.Column="1" Header="{Binding SelectedItem.Name, FallbackValue={DynamicResource m_selectedItem}, TargetNullValue={DynamicResource m_ItemsList}}">
                         <StackPanel Visibility="{Binding SelectedItem, Converter={StaticResource SelectedItemVisibility}}">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="2*"/>
                                     <ColumnDefinition Width="6*"/>
                                 </Grid.ColumnDefinitions>
-                                <TextBlock>Название:</TextBlock>
-                                <TextBox Grid.Column="1" Text="{Binding SelectedItem.Name, TargetNullValue='Товар не выбран', UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBlock Text="{DynamicResource m_ItemName}"/>
+                                <TextBox Grid.Column="1" Text="{Binding SelectedItem.Name, TargetNullValue={DynamicResource m_ItemNull}, UpdateSourceTrigger=PropertyChanged}"/>
                             </Grid>
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="2*"/>
                                     <ColumnDefinition Width="6*"/>
                                 </Grid.ColumnDefinitions>
-                                <TextBlock>Краткое описание:</TextBlock>
-                                <TextBox Grid.Column="1" Text="{Binding SelectedItem.SmallDescription, TargetNullValue='Товар не выбран', UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBlock Text="{DynamicResource m_ItemSmallDesc}"/>
+                                <TextBox Grid.Column="1" Text="{Binding SelectedItem.SmallDescription, TargetNullValue={DynamicResource m_ItemsList}, UpdateSourceTrigger=PropertyChanged}"/>
                             </Grid>
                             <Grid>
                                 <Grid.ColumnDefinitions>
@@ -62,7 +62,7 @@
                                     <ColumnDefinition Width="0.5*"/>
                                     <ColumnDefinition Width="5.5*"/>
                                 </Grid.ColumnDefinitions>
-                                <TextBlock>Рейтинг:</TextBlock>
+                                <TextBlock Text="{DynamicResource m_ItemRating}"/>
                                 <TextBlock Grid.Column="1" Text="{Binding SelectedItem.Rating, TargetNullValue='0'}"/>
                                 <Slider Grid.Column="2" Value="{Binding SelectedItem.Rating, UpdateSourceTrigger=PropertyChanged}" Maximum="10" Minimum="1" TickPlacement="TopLeft" TickFrequency="0.1" IsSnapToTickEnabled="True" SmallChange="1"></Slider>
                             </Grid>
@@ -71,7 +71,7 @@
                                     <ColumnDefinition Width="2*"/>
                                     <ColumnDefinition Width="6*"/>
                                 </Grid.ColumnDefinitions>
-                                <TextBlock>Цена:</TextBlock>
+                                <TextBlock Text="{DynamicResource m_ItemPrice}"/>
                                 <TextBox Grid.Column="1" x:Name="PriceTextBox" PreviewTextInput="NumberValidationTextBox" Text="{Binding SelectedItem.Price, TargetNullValue='0', UpdateSourceTrigger=PropertyChanged}"/>
                             </Grid>
                             <Grid>
@@ -79,7 +79,7 @@
                                     <ColumnDefinition Width="2*"/>
                                     <ColumnDefinition Width="6*"/>
                                 </Grid.ColumnDefinitions>
-                                <TextBlock>Количество:</TextBlock>
+                                <TextBlock Text="{DynamicResource m_ItemQuantity}"/>
                                 <TextBox Grid.Column="1" x:Name="QuantityTextBox" PreviewTextInput="NumberValidationTextBox" Text="{Binding SelectedItem.Quantity, TargetNullValue='0', UpdateSourceTrigger=PropertyChanged}"/>
                             </Grid>
                             <Grid>
@@ -87,7 +87,7 @@
                                     <ColumnDefinition Width="2*"/>
                                     <ColumnDefinition Width="6*"/>
                                 </Grid.ColumnDefinitions>
-                                <TextBlock>Полное описание:</TextBlock>
+                                <TextBlock Text="{DynamicResource m_ItemDescription}"/>
                                 <TextBox Grid.Column="1" Width="Auto" TextWrapping="Wrap" Text="{Binding SelectedItem.Description, TargetNullValue='Товар не выбран', UpdateSourceTrigger=PropertyChanged}"/>
                             </Grid>
                             <Grid>
@@ -95,11 +95,11 @@
                                     <ColumnDefinition Width="2*"/>
                                     <ColumnDefinition Width="6*"/>
                                 </Grid.ColumnDefinitions>
-                                <TextBlock>Категория:</TextBlock>
+                                <TextBlock Text="{DynamicResource m_ItemCategory}"/>
                                 <ComboBox Grid.Column="1" Height="30" VerticalAlignment="Top" SelectedIndex="{Binding SelectedItem.ItemCategory, Converter={StaticResource ItemCategoryToIndex}}">
-                                    <TextBlock>Для всей семьи</TextBlock>
-                                    <TextBlock>Вечеринка</TextBlock>
-                                    <TextBlock>Карточная</TextBlock>
+                                    <TextBlock Text="{DynamicResource m_Family}"/>
+                                    <TextBlock Text="{DynamicResource m_Party}"/>
+                                    <TextBlock Text="{DynamicResource m_Cards}"/>
                                 </ComboBox >
                             </Grid>
                             <Grid>
@@ -111,30 +111,30 @@
                                     <RowDefinition/>
                                     <RowDefinition/>
                                 </Grid.RowDefinitions>
-                                <TextBlock>Изображение</TextBlock>
+                                <TextBlock Text="{DynamicResource m_Image}"/>
                                 <!--<TextBox Grid.Column="1" Width="Auto" TextWrapping="Wrap" Text="{Binding SelectedItem.Description, TargetNullValue='Товар не выбран', UpdateSourceTrigger=PropertyChanged}"/>-->
                                 <Image Grid.Column="1" Grid.ColumnSpan="2" Source="{Binding SelectedItem.ImagePath, Converter={StaticResource ImageToResolvedImage}}" Height="150"/>
-                                <Button Grid.Column="0" Grid.Row="1" Content="Изменить изображение" Command="{Binding ChangeImageCommand}"/>
+                                <Button Grid.Column="0" Grid.Row="1" Content="{DynamicResource m_ChangeImage}" Command="{Binding ChangeImageCommand}"/>
                             </Grid>
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="2*"/>
                                     <ColumnDefinition Width="6*"/>
                                 </Grid.ColumnDefinitions>
-                                <Button Grid.Column="0" Grid.Row="1" Content="Удалить" Command="{Binding RemoveItemCommand}"/>
+                                <Button Grid.Column="0" Grid.Row="1" Content="{DynamicResource m_Delete}" Command="{Binding RemoveItemCommand}"/>
                             </Grid>
                         </StackPanel>
                     </GroupBox>
                 </Grid>
             </TabItem>
-            <TabItem Header="Добавить товар">
+            <TabItem Header="{DynamicResource m_AddItem}">
                 <StackPanel Visibility="{Binding ItemToCreate, Converter={StaticResource SelectedItemVisibility}}">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="2*"/>
                             <ColumnDefinition Width="6*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock>Название:</TextBlock>
+                        <TextBlock Text="{DynamicResource m_ItemName}"/>
                         <TextBox Grid.Column="1" Text="{Binding ItemToCreate.Name, UpdateSourceTrigger=PropertyChanged}"/>
                     </Grid>
                     <Grid>
@@ -142,7 +142,7 @@
                             <ColumnDefinition Width="2*"/>
                             <ColumnDefinition Width="6*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock>Краткое описание:</TextBlock>
+                        <TextBlock Text="{DynamicResource m_ItemSmallDesc}"/>
                         <TextBox Grid.Column="1" Text="{Binding ItemToCreate.SmallDescription, UpdateSourceTrigger=PropertyChanged}"/>
                     </Grid>
                     <Grid>
@@ -151,7 +151,7 @@
                             <ColumnDefinition Width="0.5*"/>
                             <ColumnDefinition Width="5.5*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock>Рейтинг:</TextBlock>
+                        <TextBlock Text="{DynamicResource m_ItemRating}"/>
                         <TextBlock Grid.Column="1" Text="{Binding ItemToCreate.Rating, TargetNullValue='0'}"/>
                         <Slider Grid.Column="2" Value="{Binding ItemToCreate.Rating, UpdateSourceTrigger=PropertyChanged}" Maximum="10" Minimum="1" TickPlacement="TopLeft" TickFrequency="0.1" IsSnapToTickEnabled="True" SmallChange="1"></Slider>
                     </Grid>
@@ -160,7 +160,7 @@
                             <ColumnDefinition Width="2*"/>
                             <ColumnDefinition Width="6*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock>Цена:</TextBlock>
+                        <TextBlock Text="{DynamicResource m_ItemPrice}"/>
                         <TextBox Grid.Column="1" x:Name="CreatePriceTextBox" PreviewTextInput="NumberValidationTextBox" Text="{Binding ItemToCreate.Price, TargetNullValue='0', UpdateSourceTrigger=PropertyChanged}"/>
                     </Grid>
                     <Grid>
@@ -168,7 +168,7 @@
                             <ColumnDefinition Width="2*"/>
                             <ColumnDefinition Width="6*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock>Количество:</TextBlock>
+                        <TextBlock Text="{DynamicResource m_ItemPrice}"/>
                         <TextBox Grid.Column="1" x:Name="CreateQuantityTextBox" PreviewTextInput="NumberValidationTextBox" Text="{Binding ItemToCreate.Quantity, TargetNullValue='0', UpdateSourceTrigger=PropertyChanged}"/>
                     </Grid>
                     <Grid>
@@ -176,7 +176,7 @@
                             <ColumnDefinition Width="2*"/>
                             <ColumnDefinition Width="6*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock>Полное описание:</TextBlock>
+                        <TextBlock Text="{DynamicResource m_ItemDescription}"/>
                         <TextBox Grid.Column="1" Width="Auto" TextWrapping="Wrap" Text="{Binding ItemToCreate.Description, UpdateSourceTrigger=PropertyChanged}"/>
                     </Grid>
                     <Grid>
@@ -184,11 +184,11 @@
                             <ColumnDefinition Width="2*"/>
                             <ColumnDefinition Width="6*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock>Категория:</TextBlock>
+                        <TextBlock Text="{DynamicResource m_ItemCategory}"/>
                         <ComboBox Grid.Column="1" Height="30" VerticalAlignment="Top" SelectedIndex="{Binding ItemToCreate.ItemCategory, Converter={StaticResource ItemCategoryToIndex}}">
-                            <TextBlock>Для всей семьи</TextBlock>
-                            <TextBlock>Вечеринка</TextBlock>
-                            <TextBlock>Карточная</TextBlock>
+                            <TextBlock Text="{DynamicResource m_Family}"/>
+                            <TextBlock Text="{DynamicResource m_Party}"/>
+                            <TextBlock Text="{DynamicResource m_Cards}"/>
                         </ComboBox >
                     </Grid>
                     <Grid>
@@ -200,17 +200,18 @@
                             <RowDefinition/>
                             <RowDefinition/>
                         </Grid.RowDefinitions>
-                        <TextBlock>Изображение</TextBlock>
+                        <TextBlock Text="{DynamicResource m_Image}"/>
                         <!--<TextBox Grid.Column="1" Width="Auto" TextWrapping="Wrap" Text="{Binding SelectedItem.Description, TargetNullValue='Товар не выбран', UpdateSourceTrigger=PropertyChanged}"/>-->
                         <Image Grid.Column="1" Grid.ColumnSpan="2" Source="{Binding ItemToCreate.ImagePath, Converter={StaticResource ImageToResolvedImage}}" Height="150"/>
-                        <Button Grid.Column="0" Grid.Row="1" Content="Изменить изображение" Command="{Binding SetImageCommand}"/>
+                        <Button Grid.Column="0" Grid.Row="1" Content="{DynamicResource m_ChangeImage}" Command="{Binding SetImageCommand}"/>
                     </Grid>
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="2*"/>
-                            <ColumnDefinition Width="6*"/>
+                            <ColumnDefinition Width="24*"/>
+                            <ColumnDefinition Width="175*"/>
+                            <ColumnDefinition Width="596*"/>
                         </Grid.ColumnDefinitions>
-                        <Button Grid.Column="0" Grid.Row="1" Content="Добавить" Command="{Binding AddItemCommand}"/>
+                        <Button Grid.Column="0" Content="{DynamicResource m_AddItem}" Command="{Binding AddItemCommand}" Grid.ColumnSpan="2"/>
                     </Grid>
                 </StackPanel>
             </TabItem>
