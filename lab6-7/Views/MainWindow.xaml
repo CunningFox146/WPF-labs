@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:lab6_7"
-        xmlns:c="clr-namespace:lab6_7.Converters" Height="500" Width="800">
+        xmlns:c="clr-namespace:lab6_7.Converters" Height="550" Width="800">
     <Window.Resources>
         <c:ImageToResolvedImage x:Key="ImageToResolvedImage" />
         <c:ItemCategoryToIndex x:Key="ItemCategoryToIndex" />
@@ -114,11 +114,103 @@
                                 <Image Grid.Column="1" Grid.ColumnSpan="2" Source="{Binding SelectedItem.ImagePath, Converter={StaticResource ImageToResolvedImage}}" Height="150"/>
                                 <Button Grid.Column="0" Grid.Row="1" Content="Изменить изображение" Command="{Binding ChangeImageCommand}"/>
                             </Grid>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="6*"/>
+                                </Grid.ColumnDefinitions>
+                                <Button Grid.Column="0" Grid.Row="1" Content="Удалить" Command="{Binding RemoveItemCommand}"/>
+                            </Grid>
                         </StackPanel>
                     </GroupBox>
                 </Grid>
             </TabItem>
             <TabItem Header="Добавить товар">
+                <StackPanel Visibility="{Binding ItemToCreate, Converter={StaticResource SelectedItemVisibility}}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="6*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock>Название:</TextBlock>
+                        <TextBox Grid.Column="1" Text="{Binding ItemToCreate.Name, UpdateSourceTrigger=PropertyChanged}"/>
+                    </Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="6*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock>Краткое описание:</TextBlock>
+                        <TextBox Grid.Column="1" Text="{Binding ItemToCreate.SmallDescription, UpdateSourceTrigger=PropertyChanged}"/>
+                    </Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="0.5*"/>
+                            <ColumnDefinition Width="5.5*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock>Рейтинг:</TextBlock>
+                        <TextBlock Grid.Column="1" Text="{Binding ItemToCreate.Rating, TargetNullValue='0'}"/>
+                        <Slider Grid.Column="2" Value="{Binding ItemToCreate.Rating, UpdateSourceTrigger=PropertyChanged}" Maximum="10" Minimum="1" TickPlacement="TopLeft" TickFrequency="0.1" IsSnapToTickEnabled="True" SmallChange="1"></Slider>
+                    </Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="6*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock>Цена:</TextBlock>
+                        <TextBox Grid.Column="1" x:Name="CreatePriceTextBox" PreviewTextInput="NumberValidationTextBox" Text="{Binding ItemToCreate.Price, TargetNullValue='0', UpdateSourceTrigger=PropertyChanged}"/>
+                    </Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="6*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock>Количество:</TextBlock>
+                        <TextBox Grid.Column="1" x:Name="CreateQuantityTextBox" PreviewTextInput="NumberValidationTextBox" Text="{Binding ItemToCreate.Quantity, TargetNullValue='0', UpdateSourceTrigger=PropertyChanged}"/>
+                    </Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="6*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock>Полное описание:</TextBlock>
+                        <TextBox Grid.Column="1" Width="Auto" TextWrapping="Wrap" Text="{Binding ItemToCreate.Description, UpdateSourceTrigger=PropertyChanged}"/>
+                    </Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="6*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock>Категория:</TextBlock>
+                        <ComboBox Grid.Column="1" Height="30" VerticalAlignment="Top" SelectedIndex="{Binding ItemToCreate.ItemCategory, Converter={StaticResource ItemCategoryToIndex}}">
+                            <TextBlock>Для всей семьи</TextBlock>
+                            <TextBlock>Вечеринка</TextBlock>
+                            <TextBlock>Карточная</TextBlock>
+                        </ComboBox >
+                    </Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="6*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <TextBlock>Изображение</TextBlock>
+                        <!--<TextBox Grid.Column="1" Width="Auto" TextWrapping="Wrap" Text="{Binding SelectedItem.Description, TargetNullValue='Товар не выбран', UpdateSourceTrigger=PropertyChanged}"/>-->
+                        <Image Grid.Column="1" Grid.ColumnSpan="2" Source="{Binding ItemToCreate.ImagePath, Converter={StaticResource ImageToResolvedImage}}" Height="150"/>
+                        <Button Grid.Column="0" Grid.Row="1" Content="Изменить изображение" Command="{Binding SetImageCommand}"/>
+                    </Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="6*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="0" Grid.Row="1" Content="Добавить" Command="{Binding AddItemCommand}"/>
+                    </Grid>
+                </StackPanel>
             </TabItem>
         </TabControl>
     </DockPanel>
