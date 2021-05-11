@@ -16,6 +16,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using lab6_7.ViewModels;
 using System.Text.RegularExpressions;
+using System.Windows.Resources;
 
 namespace lab6_7
 {
@@ -25,6 +26,11 @@ namespace lab6_7
         {
             this.DataContext = new MainWindowViewModel();
             InitializeComponent();
+
+            
+            //StreamResourceInfo sri = Application.GetResourceStream(new Uri("pack://application:,,,/Resources/CoolCursor.cur"));
+            //Cursor cursor = new Cursor(sri.Stream);
+            //Cursor = cursor;
         }
 
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)

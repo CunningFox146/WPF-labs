@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Resources;
 
 namespace lab6_7.ViewModels
 {
@@ -174,6 +175,7 @@ namespace lab6_7.ViewModels
             });
 
             Items = new ObservableCollection<Item>(items);
+
         }
     }
 }
