@@ -4,7 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:lab6_7"
-        xmlns:c="clr-namespace:lab6_7.Converters" Height="550" Width="800">
+        xmlns:c="clr-namespace:lab6_7.Converters" Height="550" Width="800"
+        Cursor="C:\\Users\\makar\\Desktop\\Универ\\ООП\\WPF-labs\\lab6-7\\Resources\\CoolCursor.cur"
+        >
     <Window.Resources>
         <c:ImageToResolvedImage x:Key="ImageToResolvedImage" />
         <c:ItemCategoryToIndex x:Key="ItemCategoryToIndex" />
@@ -169,7 +171,7 @@
                             <ColumnDefinition Width="2*"/>
                             <ColumnDefinition Width="6*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="{DynamicResource m_ItemPrice}"/>
+                        <TextBlock Text="{DynamicResource m_ItemQuantity}"/>
                         <TextBox Grid.Column="1" x:Name="CreateQuantityTextBox" PreviewTextInput="NumberValidationTextBox" Text="{Binding ItemToCreate.Quantity, TargetNullValue='0', UpdateSourceTrigger=PropertyChanged}"/>
                     </Grid>
                     <Grid>

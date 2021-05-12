@@ -161,20 +161,20 @@ namespace lab6_7.ViewModels
 
             ItemToCreate = new Item();
 
-            var item_idx = 1;
-            var items = Enumerable.Range(1, 10).Select(i => new Item
-            {
-                Name = $"Board game {item_idx}",
-                SmallDescription = $"Very cool game with name {item_idx}",
-                Description = $"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras dictum lectus nec mollis sollicitudin. Quisque quis nisl posuere, lacinia justo id, iaculis sapien. Aliquam pulvinar euismod augue, vel elementum ante sagittis eu. Nullam vitae neque laoreet, scelerisque ipsum placerat, facilisis libero. Lorem ipsum dolor sit amet, consectetur adipiscing eli{item_idx}",
-                Rating = item_idx,
-                Price = item_idx * 10,
-                Quantity = item_idx * 15,
-                ItemCategory = (ItemCategory)(item_idx++ % 3),
-                ImagePath = null,
-            });
+            //var item_idx = 1;
+            //var items = Enumerable.Range(1, 10).Select(i => new Item
+            //{
+            //    Name = $"Board game {item_idx}",
+            //    SmallDescription = $"Very cool game with name {item_idx}",
+            //    Description = $"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras dictum lectus nec mollis sollicitudin. Quisque quis nisl posuere, lacinia justo id, iaculis sapien. Aliquam pulvinar euismod augue, vel elementum ante sagittis eu. Nullam vitae neque laoreet, scelerisque ipsum placerat, facilisis libero. Lorem ipsum dolor sit amet, consectetur adipiscing eli{item_idx}",
+            //    Rating = item_idx,
+            //    Price = item_idx * 10,
+            //    Quantity = item_idx * 15,
+            //    ItemCategory = (ItemCategory)(item_idx++ % 3),
+            //    ImagePath = null,
+            //});
 
-            Items = new ObservableCollection<Item>(items);
+            Items = new ObservableCollection<Item>(/*items*/);
 
         }
     }
