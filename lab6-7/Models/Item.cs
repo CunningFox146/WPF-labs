@@ -12,6 +12,13 @@ namespace lab6_7.Models
         Cards,
     }
 
+    enum SearchType
+    {
+        Name,
+        Count,
+        Price
+    }
+
     class Item
     {
         public string Name { get; set; }

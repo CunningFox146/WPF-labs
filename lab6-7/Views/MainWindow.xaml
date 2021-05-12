@@ -11,6 +11,7 @@
         <c:ImageToResolvedImage x:Key="ImageToResolvedImage" />
         <c:ItemCategoryToIndex x:Key="ItemCategoryToIndex" />
         <c:SelectedItemVisibility x:Key="SelectedItemVisibility" />
+        <c:SearchTypeToIndex x:Key="SearchTypeToIndex" />
     </Window.Resources>
 
     <DockPanel>
@@ -217,6 +218,36 @@
                         <Button Grid.Column="0" Content="{DynamicResource m_AddItem}" Command="{Binding AddItemCommand}" Grid.ColumnSpan="2"/>
                     </Grid>
                 </StackPanel>
+            </TabItem>
+            <TabItem Header="Посик" Height="20" VerticalAlignment="Top">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="3*"/>
+                    </Grid.ColumnDefinitions>
+                    <GroupBox Grid.Column="0" Header="{DynamicResource m_ItemsList}">
+                        <StackPanel>
+                            <TextBlock Text="Вид поиска:"/>
+                            <ComboBox Grid.Column="1" Height="30" VerticalAlignment="Top" SelectedIndex="{Binding SearchType, Converter={StaticResource SearchTypeToIndex}}">
+                                <TextBlock Text="Наименование"/>
+                                <TextBlock Text="Количество"/>
+                                <TextBlock Text="Цена"/>
+                            </ComboBox >
+                            <TextBlock Text="Сортировка по:"/>
+                            <ComboBox Grid.Column="1" Height="30" VerticalAlignment="Top" SelectedIndex="{Binding SortType, Converter={StaticResource SearchTypeToIndex}}">
+                                <TextBlock Text="Наименование"/>
+                                <TextBlock Text="Количество"/>
+                                <TextBlock Text="Цена"/>
+                            </ComboBox >
+                            <TextBlock Text="Строка поиска:"/>
+                            <TextBox Cursor="IBeam" Text="{Binding SearchString}"></TextBox>
+                            <Button Content="Поиск" Command="{Binding SearchCommand}"/>
+                        </StackPanel>
+                    </GroupBox>
+                    <GroupBox Grid.Column="1" Header="{DynamicResource m_ItemsList}">
+                        <ListBox ItemsSource="{Binding SortedItems}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedItem}"/>
+                    </GroupBox>
+                </Grid>
             </TabItem>
         </TabControl>
     </DockPanel>

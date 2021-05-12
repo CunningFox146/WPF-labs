@@ -49,7 +49,7 @@ namespace lab6_7.ViewModels
 
             Items.Remove(SelectedItem);
             SelectedItem = null;
-            OnPropertyChanged("SelectedItem");   
+            OnPropertyChanged("SelectedItem");
         }
         
         public ICommand SetImageCommand { get; }
@@ -91,6 +91,8 @@ namespace lab6_7.ViewModels
             {
                 var (LoadedItems, _) = ItemSerializer.DeserializeFromFile<Item>(dlg.FileName);
                 Items = new ObservableCollection<Item>(LoadedItems);
+                Items.CollectionChanged += Items_CollectionChanged;
+                Items_CollectionChanged();
                 OnPropertyChanged("Items");
             }
         }
@@ -129,14 +131,56 @@ namespace lab6_7.ViewModels
             dict = Application.LoadComponent(uri) as ResourceDictionary;
 
             Application.Current.Resources.Clear();
-
             Application.Current.Resources.MergedDictionaries.Add(dict);
+        }
+
+        public ICommand SearchCommand { get; }
+        private bool OnCanSearchCommand(object p) => true;
+        private void OnSearchCommand(object p)
+        {
+            Predicate<Item> WhereSelector = (Item item) =>
+            {
+                if (String.IsNullOrEmpty(SearchString)) return true;
+
+                switch (SearchType)
+                {
+                    case SearchType.Name: return item.Name == SearchString;
+                    case SearchType.Price: return item.Price == Int32.Parse(SearchString);
+                    case SearchType.Count: return item.Quantity == Int32.Parse(SearchString);
+                }
+                return false;
+            };
+
+            Func<Item, object> orderbySelector = (Item item) =>
+            {
+                switch (SortType)
+                {
+                    case SearchType.Name: return item.Name;
+                    case SearchType.Price: return item.Price;
+                    case SearchType.Count: return item.Quantity;
+                }
+                return null;
+            };
+
+            SortedItems = new ObservableCollection<Item>((from item in Items
+                            where WhereSelector.Invoke(item)
+                            orderby orderbySelector.Invoke(item)
+                            select item).ToList());
+
+            
+
+            OnPropertyChanged("SortedItems");
         }
 
         #endregion
 
         public string CurrentLanguage { get; set; } = "Russian";
 
+        public SearchType SearchType { get; set; } = SearchType.Name;
+        public SearchType SortType { get; set; } = SearchType.Name;
+        public string SearchString { get; set; }
+
+        public ObservableCollection<Item> SortedItems { get; set; }
         public ObservableCollection<Item> Items { get; set; }
         private Item selectedItem;
         public Item SelectedItem { get => selectedItem; set => Set(ref selectedItem, value); }
@@ -156,6 +200,7 @@ namespace lab6_7.ViewModels
             LoadJsonCommand = new LambdaCommand(OnLoadJsonCommand, OnCanLoadJsonCommand);
             SaveJsonCommand = new LambdaCommand(OnSaveJsonCommand, OnCanSaveJsonCommand);
             ChangeLanguageCommand = new LambdaCommand(OnChangeLanguageCommand, OnCanChangeLanguageCommand);
+            SearchCommand = new LambdaCommand(OnSearchCommand, OnCanSearchCommand);
 
             #endregion
 
@@ -175,7 +220,20 @@ namespace lab6_7.ViewModels
             //});
 
             Items = new ObservableCollection<Item>(/*items*/);
+            SortedItems = new ObservableCollection<Item>();
+            Items.CollectionChanged += Items_CollectionChanged;
+        }
 
+        private void Items_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            SortedItems = new ObservableCollection<Item>(Items);
+            OnPropertyChanged("SortedItems");
+        }
+
+        private void Items_CollectionChanged()
+        {
+            SortedItems = new ObservableCollection<Item>(Items);
+            OnPropertyChanged("SortedItems");
         }
     }
 }
