@@ -219,7 +219,7 @@
                     </Grid>
                 </StackPanel>
             </TabItem>
-            <TabItem Header="Посик" Height="20" VerticalAlignment="Top">
+            <TabItem Header="{DynamicResource m_Search}" Height="20" VerticalAlignment="Top">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*"/>
@@ -227,24 +227,24 @@
                     </Grid.ColumnDefinitions>
                     <GroupBox Grid.Column="0" Header="{DynamicResource m_ItemsList}">
                         <StackPanel>
-                            <TextBlock Text="Вид поиска:"/>
+                            <TextBlock Text="{DynamicResource m_SearchType}"/>
                             <ComboBox Grid.Column="1" Height="30" VerticalAlignment="Top" SelectedIndex="{Binding SearchType, Converter={StaticResource SearchTypeToIndex}}">
                                 <TextBlock Text="Наименование"/>
                                 <TextBlock Text="Количество"/>
                                 <TextBlock Text="Цена"/>
                             </ComboBox >
-                            <TextBlock Text="Сортировка по:"/>
+                            <TextBlock Text="{DynamicResource m_Sort}"/>
                             <ComboBox Grid.Column="1" Height="30" VerticalAlignment="Top" SelectedIndex="{Binding SortType, Converter={StaticResource SearchTypeToIndex}}">
                                 <TextBlock Text="Наименование"/>
                                 <TextBlock Text="Количество"/>
                                 <TextBlock Text="Цена"/>
                             </ComboBox >
-                            <TextBlock Text="Строка поиска:"/>
+                            <TextBlock Text="{DynamicResource m_SearchString}"/>
                             <TextBox Cursor="IBeam" Text="{Binding SearchString}"></TextBox>
-                            <Button Content="Поиск" Command="{Binding SearchCommand}"/>
+                            <Button Content="{DynamicResource m_Search}" Command="{Binding SearchCommand}"/>
                         </StackPanel>
                     </GroupBox>
-                    <GroupBox Grid.Column="1" Header="{DynamicResource m_ItemsList}">
+                    <GroupBox Grid.Column="1" Header="{DynamicResource m_SearchResult}">
                         <ListBox ItemsSource="{Binding SortedItems}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedItem}"/>
                     </GroupBox>
                 </Grid>

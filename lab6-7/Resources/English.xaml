@@ -27,4 +27,11 @@
     <v:String x:Key="m_Delete">Delete</v:String>
     <v:String x:Key="m_AddItem">Add item</v:String>
     <v:String x:Key="m_ChangeLanguage">Change language</v:String>
+
+
+    <v:String x:Key="m_Search">Search</v:String>
+    <v:String x:Key="m_SearchType">Search type</v:String>
+    <v:String x:Key="m_Sort">Sort type</v:String>
+    <v:String x:Key="m_SearchString">Search sting</v:String>
+    <v:String x:Key="m_SearchResult">Result</v:String>
 </ResourceDictionary>

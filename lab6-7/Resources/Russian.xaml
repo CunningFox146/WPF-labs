@@ -27,4 +27,10 @@
     <v:String x:Key="m_Delete">Удалить</v:String>
     <v:String x:Key="m_AddItem">Добавить предмет</v:String>
     <v:String x:Key="m_ChangeLanguage">Сменить язык</v:String>
+
+    <v:String x:Key="m_Search">Поиск</v:String>
+    <v:String x:Key="m_SearchType">Вид поиска</v:String>
+    <v:String x:Key="m_Sort">Вид сортировки</v:String>
+    <v:String x:Key="m_SearchString">Строка поиска</v:String>
+    <v:String x:Key="m_SearchResult">Результат</v:String>
 </ResourceDictionary>
