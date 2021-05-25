@@ -47,7 +47,7 @@ namespace lab6_7.ViewModels
         private void OnRemoveItemCommand(object p)
         {
             if (SelectedItem == null) return;
-
+            DeletedItems.Push(SelectedItem);
             Items.Remove(SelectedItem);
             SelectedItem = null;
             OnPropertyChanged("SelectedItem");
@@ -186,6 +186,24 @@ namespace lab6_7.ViewModels
             OnPropertyChanged("SortedItems");
         }
 
+        public ICommand RollbackCommand { get; }
+        private bool OnCanRollbackCommand(object p) => DeletedItems.Count > 0;
+        private void OnRollbackCommand(object p)
+        {
+            Item item = DeletedItems.Pop();
+            Items.Add(item);
+            ReaddedItems.Push(item);
+        }
+
+        public ICommand UnrollbackCommand { get; }
+        private bool OnCanUnrollbackCommand(object p) => ReaddedItems.Count > 0;
+        private void OnUnrollbackCommand(object p)
+        {
+            Item item = ReaddedItems.Pop();
+            Items.Remove(item);
+            DeletedItems.Push(item);
+        }
+
         #endregion
 
         private readonly PaletteHelper paletteHelper = new PaletteHelper();
@@ -210,6 +228,9 @@ namespace lab6_7.ViewModels
         private Item itemToCreate;
         public Item ItemToCreate { get => itemToCreate; set => Set(ref itemToCreate, value); }
 
+        public Stack<Item> DeletedItems { get; set; }
+        public Stack<Item> ReaddedItems { get; set; }
+
         public MainWindowViewModel()
         {
             #region Команды
@@ -224,9 +245,14 @@ namespace lab6_7.ViewModels
             ChangeThemeCommand = new LambdaCommand(OnChangeThemeCommand, OnCanChangeThemeCommand);
             ChangeLanguageCommand = new LambdaCommand(OnChangeLanguageCommand, OnCanChangeLanguageCommand);
             SearchCommand = new LambdaCommand(OnSearchCommand, OnCanSearchCommand);
+            RollbackCommand = new LambdaCommand(OnRollbackCommand, OnCanRollbackCommand);
+            UnrollbackCommand = new LambdaCommand(OnUnrollbackCommand, OnCanUnrollbackCommand);
 
             #endregion
-            
+
+            DeletedItems = new Stack<Item>();
+            ReaddedItems = new Stack<Item>();
+
             ItemToCreate = new Item();
 
             //var item_idx = 1;

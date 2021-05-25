@@ -22,6 +22,57 @@
         <c:ItemCategoryToIndex x:Key="ItemCategoryToIndex" />
         <c:SelectedItemVisibility x:Key="SelectedItemVisibility" />
         <c:SearchTypeToIndex x:Key="SearchTypeToIndex" />
+
+        <ControlTemplate x:Key="ButtonTemplate" TargetType="Button">
+            <Border BorderBrush="Orange" BorderThickness="3" CornerRadius="2"
+                    TextBlock.Foreground="White">
+                <Border.Background>
+                    <LinearGradientBrush>
+                        <GradientStopCollection>
+                            <GradientStop Offset="0" Color="LimeGreen"></GradientStop>
+                            <GradientStop Offset="1" Color="LightBlue"></GradientStop>
+                        </GradientStopCollection>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <ContentPresenter RecognizesAccessKey="True"></ContentPresenter>
+            </Border>
+        </ControlTemplate>
+
+        <Style TargetType="TextBox">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding ItemToCreate.Name}"
+                        Value="1">
+                    <Setter Property="FontSize" Value="20"/>
+                </DataTrigger>
+                
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="Button">
+            <Style.Triggers>
+                <EventTrigger RoutedEvent="MouseEnter">
+                    <EventTrigger.Actions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <ColorAnimation To="green" 
+                                    Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" 
+                                    FillBehavior="Stop" 
+                                    Duration="0:0:1"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger.Actions>
+                </EventTrigger>
+                <MultiTrigger>
+                    <MultiTrigger.Conditions>
+                        <Condition Property="IsMouseOver" Value="True" />
+                        <Condition Property="IsPressed" Value="True" />
+                    </MultiTrigger.Conditions>
+                    <MultiTrigger.Setters>
+                        <Setter Property="FontSize" Value="14" />
+                        <Setter Property="Foreground" Value="Red" />
+                    </MultiTrigger.Setters>
+                </MultiTrigger>
+            </Style.Triggers>
+        </Style>
     </Window.Resources>
 
     <DockPanel Background="{DynamicResource MaterialDesignBackground}">
@@ -50,7 +101,17 @@
                     </Grid.ColumnDefinitions>
 
                     <GroupBox Header="{DynamicResource m_ItemsList}">
-                        <ListBox ItemsSource="{Binding Items}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedItem}"/>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="9*"/>
+                                <RowDefinition Height="1*"/>
+                            </Grid.RowDefinitions>
+                            <ListBox ItemsSource="{Binding Items}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedItem}"/>
+                            <Grid Grid.Row="1">
+                                <Button Content="⬅️" HorizontalAlignment="Left" Command="{Binding RollbackCommand}"/>
+                                <Button Content="➡️" HorizontalAlignment="Right" Command="{Binding UnrollbackCommand}"/>
+                            </Grid>
+                        </Grid>
                     </GroupBox>
                     <GroupBox Grid.Column="1" Header="{Binding SelectedItem.Name}">
                         <StackPanel Visibility="{Binding SelectedItem, Converter={StaticResource SelectedItemVisibility}}">
@@ -149,7 +210,7 @@
                             <ColumnDefinition Width="6*"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="{DynamicResource m_ItemName}"/>
-                        <TextBox Grid.Column="1" Text="{Binding ItemToCreate.Name, UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBox Grid.Column="1" Text="{Binding ItemToCreate.Name, UpdateSourceTrigger=PropertyChanged}" />
                     </Grid>
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -225,7 +286,7 @@
                             <ColumnDefinition Width="175*"/>
                             <ColumnDefinition Width="596*"/>
                         </Grid.ColumnDefinitions>
-                        <Button Grid.Column="0" Content="{DynamicResource m_AddItem}" Command="{Binding AddItemCommand}" Grid.ColumnSpan="2"/>
+                        <Button Grid.Column="0" Content="{DynamicResource m_AddItem}" Command="{Binding AddItemCommand}" Grid.ColumnSpan="2" Template="{StaticResource ButtonTemplate}"/>
                     </Grid>
                 </StackPanel>
             </TabItem>
