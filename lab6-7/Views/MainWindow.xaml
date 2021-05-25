@@ -5,6 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:lab6_7"
         xmlns:c="clr-namespace:lab6_7.Converters" Height="550" Width="800"
+        
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        
         Cursor="C:\\Users\\makar\\Desktop\\Универ\\ООП\\WPF-labs\\lab6-7\\Resources\\CoolCursor.cur"
         >
     <Window.Resources>
@@ -14,7 +24,7 @@
         <c:SearchTypeToIndex x:Key="SearchTypeToIndex" />
     </Window.Resources>
 
-    <DockPanel>
+    <DockPanel Background="{DynamicResource MaterialDesignBackground}">
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="{DynamicResource m_File}">
                 <MenuItem Header="{DynamicResource m_Save}" Command="{Binding SaveJsonCommand}"/>
@@ -31,7 +41,7 @@
                 <TextBlock x:Name="tbStatus">Привет всем</TextBlock>
             </StatusBarItem>
         </StatusBar>-->
-        <TabControl>
+        <TabControl Background="{DynamicResource MaterialDesignBackground}">
             <TabItem Header="{DynamicResource m_ItemsList}">
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -247,6 +257,41 @@
                     <GroupBox Grid.Column="1" Header="{DynamicResource m_SearchResult}">
                         <ListBox ItemsSource="{Binding SortedItems}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedItem}"/>
                     </GroupBox>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Тема" Height="20" VerticalAlignment="Top">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <!--<TextBlock Text="Цвет:"/>-->
+                    <materialDesign:ColorPicker Color="{Binding CurrentColor}"/>
+                    <CheckBox
+                    Grid.Row="1"
+                    Style="{StaticResource MaterialDesignFilterChipCheckBox}"
+                    IsChecked="{Binding IsDark, UpdateSourceTrigger=PropertyChanged}"
+                    Content="CheckBox" />
+                    <Button Grid.Row="2" Content="Применить" Command="{Binding ChangeThemeCommand}" Cursor="Hand"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Контролы" Height="20" VerticalAlignment="Top">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <local:FlipPanel BorderBrush="MediumPurple" BorderThickness="3"
+                                         CornerRadius="5" Margin="0 10 0 0">
+                        <local:FlipPanel.FrontContent>
+                            <TextBlock Margin="5" Text="Переверни меня!" Background="{x:Null}"/>
+                        </local:FlipPanel.FrontContent>
+                        <local:FlipPanel.BackContent>
+                            <local:UserControl1/>
+                        </local:FlipPanel.BackContent>
+                    </local:FlipPanel>
+                    <local:UserControlClock Grid.Column ="1"/>
                 </Grid>
             </TabItem>
         </TabControl>

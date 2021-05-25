@@ -1,15 +1,16 @@
 ﻿using lab6_7.Commands;
 using lab6_7.Models;
 using lab6_7.ViewModels.Base;
+using MaterialDesignThemes.Wpf;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Resources;
 
 namespace lab6_7.ViewModels
 {
@@ -97,6 +98,19 @@ namespace lab6_7.ViewModels
             }
         }
 
+        public ICommand ChangeThemeCommand{ get; }
+        private bool OnCanChangeThemeCommand(object p) => true;
+        private void OnChangeThemeCommand(object p)
+        {
+            ITheme theme = paletteHelper.GetTheme();
+            IBaseTheme baseTheme = isDark ? new MaterialDesignDarkTheme() : (IBaseTheme)new MaterialDesignLightTheme();
+
+            theme.SetBaseTheme(baseTheme);
+            theme.SetPrimaryColor(currentColor);
+
+            paletteHelper.SetTheme(theme);
+        }
+
         public ICommand SaveJsonCommand { get; }
         private bool OnCanSaveJsonCommand(object p) => true;
         private void OnSaveJsonCommand(object p)
@@ -174,6 +188,14 @@ namespace lab6_7.ViewModels
 
         #endregion
 
+        private readonly PaletteHelper paletteHelper = new PaletteHelper();
+
+        private bool isDark = false;
+        public bool IsDark { get => isDark; set => Set(ref isDark, value); }
+
+        private System.Windows.Media.Color currentColor;
+        public System.Windows.Media.Color CurrentColor { get => currentColor; set => Set(ref currentColor, value); }
+
         public string CurrentLanguage { get; set; } = "Russian";
 
         public SearchType SearchType { get; set; } = SearchType.Name;
@@ -199,11 +221,12 @@ namespace lab6_7.ViewModels
             RemoveItemCommand = new LambdaCommand(OnRemoveItemCommand, OnCanRemoveItemCommand);
             LoadJsonCommand = new LambdaCommand(OnLoadJsonCommand, OnCanLoadJsonCommand);
             SaveJsonCommand = new LambdaCommand(OnSaveJsonCommand, OnCanSaveJsonCommand);
+            ChangeThemeCommand = new LambdaCommand(OnChangeThemeCommand, OnCanChangeThemeCommand);
             ChangeLanguageCommand = new LambdaCommand(OnChangeLanguageCommand, OnCanChangeLanguageCommand);
             SearchCommand = new LambdaCommand(OnSearchCommand, OnCanSearchCommand);
 
             #endregion
-
+            
             ItemToCreate = new Item();
 
             //var item_idx = 1;
